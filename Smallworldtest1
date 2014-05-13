@@ -32,17 +32,13 @@ def SmallWorld():
             #print Ranp
                 if Ranp<=p:
                     NetMatrix[n,m]=1#aij j>i
-                Ranp=random.random()
-                if Ranp<=p:
-                    NetMatrix[m,n]=1#aij j>i
+                    NetMatrix[m,n]=1
         else:
             for m in range(n+2,N):
                 Ranp=random.random()
                 #print Ranp
                 if Ranp<=p:
                     NetMatrix[n,m]=1
-                Ranp=random.random()
-                if Ranp<=p:
                     NetMatrix[m,n]=1
 
 
