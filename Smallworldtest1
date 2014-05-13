@@ -65,7 +65,7 @@ def inpSig(ts,i):
             aij=NetMatrix[i,j]
             #print i,j
             #print aij
-            xji=(x[ts,j]-x[ts,i])
+            xji=-(x[ts,j]-x[ts,i])
             pot=pot+aij*xji
             #print ts,i,j,aij,xji,pot           
     return pot
