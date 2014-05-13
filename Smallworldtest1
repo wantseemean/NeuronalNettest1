@@ -65,10 +65,9 @@ def inpSig(ts,i):
             aij=NetMatrix[i,j]
             #print i,j
             #print aij
-            xji=x[ts,j]-x[ts,i]
+            xji=(x[ts,j]-x[ts,i])
             pot=pot+aij*xji
-            #print ts,i,j,aij,xji,pot
-           
+            #print ts,i,j,aij,xji,pot           
     return pot
 
 ########### MAIN ###################
@@ -76,7 +75,7 @@ def inpSig(ts,i):
 
 if __name__ == '__main__':
     SmallWorld()
-    dna=(1,3,1,5,4,0.005,-1.6)
+    dna=(1,3,1,5,4,0.006,-1.6)
     #print NetMatrix
     I=3;dt=0.01
     x[0]=0.3;y[0]=0.3;z[0]=3;g=1
@@ -85,9 +84,10 @@ if __name__ == '__main__':
             nn=noise()
             Is=g*inpSig(ts,i)
             if i==0 and ts==0:
-                Is=3
+                Is=-3
             #print ts,i,Is
             #print Is
+            
             x[ts+1,i],y[ts+1,i],z[ts+1,i]=HRmod(dna,x[ts,i],y[ts,i],z[ts,i],nn,Is,dt)      
             #print(x[ts+1,i],ts,i)#print m
     
