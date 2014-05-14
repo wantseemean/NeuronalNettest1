@@ -3,16 +3,19 @@ Created on May 11, 2014
 
 @author: sun
 '''
+
 import numpy
 import random
 import math
 import matplotlib.pyplot as plt
+
 p=0.4;N=6
 NetMatrix=numpy.zeros((N,N))
-Times=60000
+Times=50000
 x=numpy.zeros((Times,N))
 y=numpy.zeros((Times,N))
 z=numpy.zeros((Times,N))
+xi=numpy.zeros((Times,N))
 
 
 def SmallWorld():
@@ -32,13 +35,17 @@ def SmallWorld():
             #print Ranp
                 if Ranp<=p:
                     NetMatrix[n,m]=1#aij j>i
-                    NetMatrix[m,n]=1
+                Ranp=random.random()
+                if Ranp<=p:
+                    NetMatrix[m,n]=1#aij j>i
         else:
             for m in range(n+2,N):
                 Ranp=random.random()
                 #print Ranp
                 if Ranp<=p:
                     NetMatrix[n,m]=1
+                Ranp=random.random()
+                if Ranp<=p:
                     NetMatrix[m,n]=1
 
 
@@ -52,18 +59,25 @@ def HRmod(dna,x,y,z,nn,Is,dt):
 def noise():
     return 0
     
-def inpSig(ts,i):
+def inpSig(ts,i,b):
     pot =0
     if ts==0:
         return 0
     else:
         for j in range(N):
             aij=NetMatrix[i,j]
+            #aij=1
             #print i,j
             #print aij
-            xji=-(x[ts,j]-x[ts,i])
+            if b<20000:
+                b=-1
+            else:
+                b=1
+                    
+            xji=(x[ts,j]-x[ts,i])*b
             pot=pot+aij*xji
-            #print ts,i,j,aij,xji,pot           
+            #print ts,i,j,aij,xji,pot      
+            #print pot
     return pot
 
 ########### MAIN ###################
@@ -78,8 +92,8 @@ if __name__ == '__main__':
     for ts in range(Times-1):
         for i in range(N):                
             nn=noise()
-            Is=g*inpSig(ts,i)
-            if i==0 and ts==0:
+            Is=g*inpSig(ts,i,1)
+            if ts==0 and i==0:
                 Is=-3
             #print ts,i,Is
             #print Is
@@ -92,4 +106,3 @@ if __name__ == '__main__':
         plt.subplot(N,1,i)       
         plt.plot(x[:,i])
     plt.show()
-    
